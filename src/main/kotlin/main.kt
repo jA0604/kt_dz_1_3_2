@@ -14,14 +14,14 @@ fun main() {
     val amountVkPayOnMonth = 7_000
     val isPromo = true
 
-    if (amountCurrentMonthOnCard > limitMaxOnMounth ||
-        amountCardOnDay > limitMaxOnDay ||
-        cardType == "VK pay" && (amountCurrent > limitMaxVkPay || amountVkPayOnMonth > limitMaxVkPayInMounth)) {
-            println("Перевод невозможен. Превышение лимитов")
-    } else {
-        println("Сумма комиссии составляет: " + calculateCommission(cardType, amoutPrevMonth, amountCurrent, isPromo))
-    }
-
+    val checkLimits = amountCurrentMonthOnCard > limitMaxOnMounth ||
+                      amountCardOnDay > limitMaxOnDay ||
+                      cardType == "VK pay" &&
+                      (amountCurrent > limitMaxVkPay || amountVkPayOnMonth > limitMaxVkPayInMounth)
+    when {
+        checkLimits -> println("Перевод невозможен. Превышение лимитов")
+        else -> println("Сумма комиссии составляет: " + calculateCommission(cardType, amoutPrevMonth, amountCurrent, isPromo))
+        }
 }
 
 fun calculateCommission(cardType: String = "VK pay",
